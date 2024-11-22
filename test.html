@@ -92,10 +92,13 @@
 	input.addEventListener("mouseup", (event) => {
 		value.textContent = event.target.value;
 		writeOnCharacteristic(event.target.value);
+	});
+	input.addEventListener("touchend", (event) => {
+		value.textContent = event.target.value;
+		writeOnCharacteristic(event.target.value);
 		
 
 	});
-	
 
     // Check if BLE is available in your Browser
     function isWebBluetoothEnabled() {
