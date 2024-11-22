@@ -87,18 +87,16 @@
     //onButton.addEventListener('click', () => writeOnCharacteristic(1));
     //offButton.addEventListener('click', () => writeOnCharacteristic(0));
 	value.textContent = input.value;
-	function sleep(millis) {
-		var t = (new Date()).getTime();
-		var i = 0;
-		while (((new Date()).getTime() - t) < millis) {
-			i++;
-		}
-	}
-	input.addEventListener("input", (event) => {
+	
+	
+	input.addEventListener("mouseup", (event) => {
 		value.textContent = event.target.value;
 		writeOnCharacteristic(event.target.value);
-		sleep(500)
+		
+
 	});
+	
+
     // Check if BLE is available in your Browser
     function isWebBluetoothEnabled() {
         if (!navigator.bluetooth) {
@@ -175,12 +173,15 @@
             bleServiceFound.getCharacteristic(ledCharacteristic)
             .then(characteristic => {
                 console.log("Found the LED characteristic: ", characteristic.uuid);
-                const data = new Uint8Array([value]);
-                return characteristic.writeValue(data);
+                const data = new Uint8Array([input.value]);
+				while (data != input.value){const data = new Uint8Array([input.value]);};
+				while (data != input.value){const data = new Uint8Array([input.value]);}
+				return characteristic.writeValue(data);
             })
             .then(() => {
                 latestValueSent.innerHTML = value;
                 console.log("Value written to LEDcharacteristic:", value);
+				
             })
             .catch(error => {
                 console.error("Error writing to the LED characteristic: ", error);
